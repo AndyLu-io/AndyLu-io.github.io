@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="世界很大，我想去看看">
-<meta property="og:type" content="website">
+<meta name="description" content="netty源码异步，协程 http://blog.csdn.net/qq910894904/article/details/41699541reactor线程  http://www.jianshu.com/p/0d0eece6d467SelectorProvider https://my.oschina.net/andylucc/blog/614295 Reactor模式是基于事件驱动的分发处理">
+<meta property="og:type" content="article">
 <meta property="og:title" content="逸清风扬的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/01/04/netty源码/index.html">
 <meta property="og:site_name" content="逸清风扬的博客">
-<meta property="og:description" content="世界很大，我想去看看">
+<meta property="og:description" content="netty源码异步，协程 http://blog.csdn.net/qq910894904/article/details/41699541reactor线程  http://www.jianshu.com/p/0d0eece6d467SelectorProvider https://my.oschina.net/andylucc/blog/614295 Reactor模式是基于事件驱动的分发处理">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://oepm97cib.bkt.clouddn.com/reactor1.png">
+<meta property="og:image" content="http://oepm97cib.bkt.clouddn.com/reactor2.png">
+<meta property="og:image" content="http://oepm97cib.bkt.clouddn.com/reactor3.png">
+<meta property="og:updated_time" content="2019-01-04T10:28:49.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逸清风扬的博客">
-<meta name="twitter:description" content="世界很大，我想去看看">
+<meta name="twitter:description" content="netty源码异步，协程 http://blog.csdn.net/qq910894904/article/details/41699541reactor线程  http://www.jianshu.com/p/0d0eece6d467SelectorProvider https://my.oschina.net/andylucc/blog/614295 Reactor模式是基于事件驱动的分发处理">
+<meta name="twitter:image" content="http://oepm97cib.bkt.clouddn.com/reactor1.png">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/04/netty源码/">
 
 
 
 
 
-  <title>逸清风扬的博客</title>
+  <title> | 逸清风扬的博客</title>
   
 
 
@@ -143,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -217,9 +221,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -249,9 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/04/netty源码/" itemprop="url">Untitled</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -301,9 +303,7 @@
       
 
       
-        
-          
-            <h1 id="netty源码"><a href="#netty源码" class="headerlink" title="netty源码"></a>netty源码</h1><p>异步，协程 <a href="http://blog.csdn.net/qq910894904/article/details/41699541" target="_blank" rel="noopener">http://blog.csdn.net/qq910894904/article/details/41699541</a><br>reactor线程  <a href="http://www.jianshu.com/p/0d0eece6d467" target="_blank" rel="noopener">http://www.jianshu.com/p/0d0eece6d467</a><br>SelectorProvider <a href="https://my.oschina.net/andylucc/blog/614295" target="_blank" rel="noopener">https://my.oschina.net/andylucc/blog/614295</a></p>
+        <h1 id="netty源码"><a href="#netty源码" class="headerlink" title="netty源码"></a>netty源码</h1><p>异步，协程 <a href="http://blog.csdn.net/qq910894904/article/details/41699541" target="_blank" rel="noopener">http://blog.csdn.net/qq910894904/article/details/41699541</a><br>reactor线程  <a href="http://www.jianshu.com/p/0d0eece6d467" target="_blank" rel="noopener">http://www.jianshu.com/p/0d0eece6d467</a><br>SelectorProvider <a href="https://my.oschina.net/andylucc/blog/614295" target="_blank" rel="noopener">https://my.oschina.net/andylucc/blog/614295</a></p>
 <p>Reactor模式是基于事件驱动的分发处理模型，如io多路复用。事件驱动（或者叫回调的方式），应用业务向一个中间人注册一个回调（event handler），当IO就绪后，就这个中间人产生一个事件，并通知此handler进行处理。<br>Reactor为事件驱动中的中间人，它接受所有handler的注册，并负责检查操作系统O是否就绪，在就绪后就调用指定handler进行处理。它是一个不断等待和循环的单独进程（线程）</p>
 <p>Java里著名框架的源码往往不容易读，他们在功能上大而全，把多态用到极致，又有很多的性能优化;相应的由于著名所以网上的资源也非常多，慢慢读总还是能体会到整个框架的设计和思路。配合着网上的博客，书籍和源代码，花了三天时间阅读，有了一定的收获，做一下笔记。<br>看netty之前回顾一下Java NIO，列一下使用Java API开发NIO所需要的几个步骤</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">selector = Selector.open();//打开一个多路复用器</span><br><span class="line">servChannel = ServerSocketChannel.open();//打开一个ServerSocketChannel</span><br><span class="line">servChannel.configureBlocking(false);//设置异步</span><br><span class="line">servChannel.socket().bind(new InetSocketAddress(port), 1024);//ServerSocketChannel绑定到地址</span><br><span class="line">//将ServerSocketChannel注册到selector上</span><br><span class="line">SelectionKey key = servChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line"></span><br><span class="line">public void run() &#123;</span><br><span class="line">    //事件循环</span><br><span class="line">    while (!stop) &#123;</span><br><span class="line">            selector.select();//在没有channel可用时一直阻塞</span><br><span class="line">            Set&lt;SelectionKey&gt; selectedKeys = selector.selectedKeys();//获取可用的channel</span><br><span class="line">            Iterator&lt;SelectionKey&gt; it = selectedKeys.iterator();</span><br><span class="line">            SelectionKey key = null;</span><br><span class="line">            while (it.hasNext()) &#123;</span><br><span class="line">                key = it.next();</span><br><span class="line">                it.remove();</span><br><span class="line">                handle(key);//每个channel具体的处理逻辑</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -328,8 +328,6 @@
 <p>我们在源码里找到了在Java NIO里要做的每一步操作，在代码中也看到了创建的两个<code>EventLoopGroup</code>的作用：一个接受连接，一个处理读写。最上面我提过一个想法，就是一个<code>selector</code>得到多个<code>selectedKeys</code>时，利用线程来并发处理，在netty源码里我们看到了，这些<code>selectedKeys</code>依旧是for循环的方法串行执行的，为什么这样呢？<br>这个问题解释起来其实很简单，先看一个简单的例子，你只有一个核心的机器，有5个任务要跑，要求最快完成这5个任务，你是在一个线程上顺序跑这5个任务还是5个线程一起跑呢？当然是顺序跑啦，只有一个核，多线程微观上还是串行执行的嘛，而且还要引入线程切换的开销，所以说假设你的任务非常消耗CPU, 那么现在每个CPU都被占满了, 你再增加线程个数, 只能降低系统的效率, 因为线程还需要切换。所以我们在很多线程池的默认设置中看到N,N+1的线程数设置。我们的<code>NIOEventLoopGroup</code>默认是线程数是CPU数*2，这些eventloop全部开启，我们的cpu其实已经在这些事件循环上跑满了，再开线程去跑具体的用户业务逻辑并不是好的做法（线程数默认是2N，这么做是因为eventloop是会阻塞的，这个时候cpu空闲了有能力处理其他的线程了，所以这里我们的线程数比核心数多，线程数=CPU核心数/(1-阻塞系数)）。</p>
 <p>这里简单的介绍了一下netty的源码，看的时间短设计的内容也有限，对于netty内部还有很多东西值得去琢磨。列一下过程中参考的资料：《netty权威指南》，《Netty5.0架构剖析和源码解读》。<br>以前主要的工作就是在Spring上堆业务代码，都是在http之上，netty不是因为自己要写一个rpc框架还真的就用不到，也就对网络编程知之甚少。最近看到的一些内容给我开了一扇门，线程，协程，事件驱动，异步这些都是高性能程序常常出现的名词，也会涉及很多操作系统层次的东西，程序员还是应该往下走，在上面堆业务还是进步太慢。</p>
 
-          
-        
       
     </div>
     
@@ -346,12 +344,12 @@
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -361,10 +359,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -372,6 +371,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -392,8 +395,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -435,6 +447,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#netty源码"><span class="nav-number">1.</span> <span class="nav-text">netty源码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -568,6 +596,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
